@@ -15,4 +15,4 @@ Editor de texto para entrevista na **Blogo**.
 - Para rodar o servidor use `npm start` e acesse a url [http://localhost](http://localhost)
 
 ## Desenvolvimento
-- Para rodar o servidor de desenvolvimento use `grunt dev`
+- Para rodar o servidor de desenvolvimento use `grunt dev` e acesse a url [http://localhost:3000](http://localhost:3000)
