@@ -2,3 +2,5 @@ node_modules
 coverage
 dist
 .idea
+.tmp
+public/dist

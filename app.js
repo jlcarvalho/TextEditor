@@ -10,16 +10,23 @@ var routes = require('./routes/index');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+if (app.get('env') === 'development') {
+  app.use(express.static(path.join(__dirname, 'public/src')));
+  app.set('views', path.join(__dirname, 'public/src'));
+  app.set('view engine', 'jade');
+  //app.use(favicon(path.join(__dirname, 'public/src', 'favicon.ico')));
+} else {
+  app.use(express.static(path.join(__dirname, 'public/dist')));
+  app.set('views', path.join(__dirname, 'public/dist'));
+  app.engine('html', require('ejs').renderFile);
+  app.set('view engine', 'html');
+  //app.use(favicon(path.join(__dirname, 'public/dist', 'favicon.ico')));
+}
 
 app.use('/', routes);
 
