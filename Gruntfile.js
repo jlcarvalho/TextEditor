@@ -4,19 +4,25 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
+  var config = {
+    dist: 'public/dist',
+    tmp: '.tmp',
+    src: 'public/src'
+  };
+
   grunt.initConfig({
     useminPrepare: {
-      html: '.tmp/*.html',
+      html: config.tmp + '/*.html',
       options: {
-        dest: 'public/dist'
+        dest: config.dist
       }
     },
 
     usemin: {
-      html: ['.tmp/*.html'],
-      css: ['.tmp/css/*.css'],
+      html: [config.tmp + '/*.html'],
+      css: [config.tmp + '/css/*.css'],
       options: {
-        assetsDirs: ['public/dist/css']
+        assetsDirs: [config.dist + '/css']
       }
     },
 
@@ -24,9 +30,9 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp',
+          cwd: config.tmp,
           src: '*.html',
-          dest: 'public/dist'
+          dest: config.dist
         }]
       }
     },
@@ -41,30 +47,30 @@ module.exports = function(grunt) {
       },
       compile: {
         files: [{
-          cwd: "public/src",
-          src: ["index.jade", "error.jade"],
-          dest: ".tmp",
+          cwd: config.src,
+          src: ['index.jade', 'error.jade'],
+          dest: config.tmp,
           expand: true,
-          ext: ".html"
+          ext: '.html'
         }]
       }
     },
 
     jshint: {
-      all: ['public/src/js/**/*.js']
+      all: [config.src + '/js/**/*.js']
     },
 
     copy: {
       styles: {
         expand: true,
-        cwd: 'public/src/css',
-        dest: '.tmp/css/',
+        cwd: config.src + '/css',
+        dest: config.tmp + '/css/',
         src: '{,*/}*.css'
       },
       scripts: {
         expand: true,
-        cwd: 'public/src/js',
-        dest: '.tmp/js/',
+        cwd: config.src + '/js',
+        dest: config.tmp + '/js/',
         src: '{,*/}*.js'
       }
     },
@@ -76,20 +82,20 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/css/',
+          cwd: config.tmp + '/css/',
           src: '{,*/}*.css',
-          dest: 'public/dist/css/'
+          dest: config.dist + '/css/'
         }]
       }
     },
 
     watch: {
       css: {
-        files: ['public/src/css/**/*.css'],
+        files: [config.src + '/css/**/*.css'],
         tasks: ['cssmin']
       },
       js: {
-        files: ['public/src/js/**/*.js'],
+        files: [config.src + '/js/**/*.js'],
         tasks: ['jshint', 'uglify']
       }
     },
@@ -114,8 +120,8 @@ module.exports = function(grunt) {
     },
 
     clean: {
-      dist: ['public/dist'],
-      tmp: ['.tmp']
+      dist: [config.dist],
+      tmp: [config.tmp]
     }
   });
 
